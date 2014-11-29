@@ -18,7 +18,6 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 {
 	private EnumMap<GHOST, MOVE> myMoves=new EnumMap<GHOST, MOVE>(GHOST.class);
 	MOVE[] moves=MOVE.values();
-	Random rnd=new Random();
 	
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue)
 	{
@@ -33,14 +32,15 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		
 		if(game.doesGhostRequireAction(GHOST.INKY))
 			myMoves.put(GHOST.INKY,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.MANHATTAN));
+					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
 		
 		if(game.doesGhostRequireAction(GHOST.PINKY))
 			myMoves.put(GHOST.PINKY,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.EUCLID));
+					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
 		
 		if(game.doesGhostRequireAction(GHOST.SUE))
-			myMoves.put(GHOST.SUE,moves[rnd.nextInt(moves.length)]);
+			myMoves.put(GHOST.SUE,
+					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
 		
 		return myMoves;
 	}
