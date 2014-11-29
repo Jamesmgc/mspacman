@@ -18,17 +18,18 @@ public class StateReader {
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
 		
-		int numberOfLines = 3;
+		int numberOfLines = readlines();
 		String[ ] textData = new String[numberOfLines];
 		
 		int i;
 
 		for (i=0; i < numberOfLines; i++) {
 			textData[ i ] = br.readLine();
+			textData[ i ].split(",");
 		}
 		
 		br.close( );
-		return textData;
+		return textData;//returns the text file as an array of arrays
 	}
 	
 	int readlines() throws IOException {

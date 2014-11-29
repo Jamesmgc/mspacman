@@ -1,5 +1,6 @@
 package pacman.entries.ghosts;
 
+import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Random;
 
@@ -8,6 +9,8 @@ import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
+
+import pacman.entries.ghosts.StateReader;
 
 /*
  * This is the class you need to modify for your entry. In particular, you need to
@@ -21,7 +24,18 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 	
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue)
 	{
+		String pathToStates = "C:/Users/james/Desktop/4thYear/AI/mspacman/stateMachine.txt";
+		String[] arrayStates;
+		
 		myMoves.clear();
+		
+		try {
+			StateReader sr = new StateReader(pathToStates);
+			arrayStates = sr.openFile();
+		} 
+		catch(IOException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		//Place your game logic here to play the game as the ghosts
 		int targetNode=game.getPacmanCurrentNodeIndex();
