@@ -18,13 +18,20 @@ public class StateReader {
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
 		
-		int numberOfLines = 3;
-		String[ ] textData = new String[numberOfLines];
+		int numberOfLines = readlines();
+		String[] textData = new String[numberOfLines];//store the text file lines
+		String[] values = new String[4];//store the states
 		
 		int i;
 
 		for (i=0; i < numberOfLines; i++) {
 			textData[ i ] = br.readLine();
+			for (int j = 0; j < 4; j++){
+				for (String retval: textData[i].split(",")){
+					values[j] 
+					System.out.println(retval);
+			    }
+			}
 			//textData[ i ].split(",");
 		}
 		
