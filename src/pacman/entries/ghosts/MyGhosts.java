@@ -32,6 +32,8 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		try {
 			StateReader sr = new StateReader(pathToStates);
 			arrayStates = sr.openFile();
+			arrayStates[0].split(",");
+			System.out.println("array value: " + arrayStates[0]);
 		} 
 		catch(IOException e) {
 			System.out.println(e.getMessage());
