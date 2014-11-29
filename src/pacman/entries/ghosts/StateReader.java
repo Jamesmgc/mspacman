@@ -30,4 +30,17 @@ public class StateReader {
 		br.close( );
 		return textData;
 	}
+	
+	int readlines() throws IOException {
+		FileReader fr = new FileReader(path);
+		BufferedReader br = new BufferedReader(fr);
+		
+		String line;
+		int noOfLines = 0;
+		
+		while ( ( line = br.readLine( ) ) != null ) {
+			noOfLines++;
+		}
+		return noOfLines;
+	}
 }
