@@ -21,19 +21,23 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 {
 	private EnumMap<GHOST, MOVE> myMoves=new EnumMap<GHOST, MOVE>(GHOST.class);
 	MOVE[] moves=MOVE.values();
+	String pathToStates = "C:/Users/james/Desktop/4thYear/AI/mspacman/stateMachine.txt";
+	String[][] arrayStates;
+	String currState;
+	
 	
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue)
 	{
-		String pathToStates = "C:/Users/james/Desktop/4thYear/AI/mspacman/stateMachine.txt";
-		String[] arrayStates;
+		
 		
 		myMoves.clear();
 		
 		try {
 			StateReader sr = new StateReader(pathToStates);
 			arrayStates = sr.openFile();
-			arrayStates[0].split(",");
-			System.out.println("array value: " + arrayStates[0]);
+			currState = arrayStates[0][0];
+			//System.out.println("array value: " + arrayStates[6][0]);
+			System.out.println("current state: " + currState);
 		} 
 		catch(IOException e) {
 			System.out.println(e.getMessage());

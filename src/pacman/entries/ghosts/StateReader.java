@@ -14,29 +14,30 @@ public class StateReader {
 		path = filePath;
 	}
 	
-	public String[] openFile() throws IOException{
+	public String[][] openFile() throws IOException{
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
 		
 		int numberOfLines = readlines();
 		String[] textData = new String[numberOfLines];//store the text file lines
-		String[] values = new String[4];//store the states
+		String[][] states = new String[numberOfLines][4];//2d array to store each state piece separately 
 		
 		int i;
-
-		for (i=0; i < numberOfLines; i++) {
+		for (i=0; i < numberOfLines; i++) {//loop through each line and split it at each ","
 			textData[ i ] = br.readLine();
-			for (int j = 0; j < 4; j++){
-				for (String retval: textData[i].split(",")){
-					values[j] 
-					System.out.println(retval);
+			
+			for (int j = 0; j < 4;){
+				for (String statePiece: textData[i].split(",")){
+					states[i][j] = statePiece;
+					//System.out.println(statePiece);
+					j++;
 			    }
 			}
-			//textData[ i ].split(",");
+			//System.out.println("STATES AT 0: " + states[3][0]);
 		}
 		
 		br.close( );
-		return textData;//returns the text file as an array of lines
+		return states;//textData;//returns the text file as an array of lines
 	}
 	
 	int readlines() throws IOException {
