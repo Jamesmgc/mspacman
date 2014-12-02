@@ -49,14 +49,30 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		int targetNode=game.getPacmanCurrentNodeIndex();
 		
 		//loop through all ghosts
-		
-		
-		if(game.doesGhostRequireAction(GHOST.BLINKY)){
+		//String str = game.getGhostCurrentState(GHOST.BLINKY);
+		//System.out.println(str);
+		String str = game.getGhostCurrentState(GHOST.BLINKY);
+		if(str == "roaming"){
+			switch (game.getGhostCurrentState(GHOST.BLINKY)){
+				case  "roaming": 
+					myMoves.put(GHOST.BLINKY,
+							game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
+									targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
+					break;
+				case  "agressive": 
+					myMoves.put(GHOST.BLINKY,
+							game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
+									targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
+					break;
+			}
+		}
+		//Executor.arrayStates;
+		/*if(game.doesGhostRequireAction(GHOST.BLINKY)){
 			if (game.getGhostCurrentState(GHOST.BLINKY) == "roaming") {
 			myMoves.put(GHOST.BLINKY,
 					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
 			}
-		}
+		}*/
 		if(game.doesGhostRequireAction(GHOST.INKY)){
 			if (game.getGhostCurrentState(GHOST.INKY) == "roaming") {
 			myMoves.put(GHOST.INKY,
