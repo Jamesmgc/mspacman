@@ -52,6 +52,7 @@ public class StateReader {
 		while ( ( line = br.readLine( ) ) != null ) {
 			noOfLines++;
 		}
+		br.close();
 		return noOfLines;
 	}
 	
@@ -61,8 +62,10 @@ public class StateReader {
 		
 		//go through each line and each element
 		for (int i = 0; i < numberOfLines; i++) {
+			System.out.println("INFO IS: " + stateTable[i][0] + "_____" + currState);
 			if (stateTable[i][0] == currState && stateTable[i][1] == currEvent) {
 				newState = stateTable[i][3];
+				//System.out.println(newState);
 				break;
 			}
 		}

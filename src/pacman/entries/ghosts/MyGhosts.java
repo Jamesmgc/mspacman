@@ -35,15 +35,16 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		int targetNode=game.getPacmanCurrentNodeIndex();
 		
 		//check for ghost events
+		//System.out.println("STATE: " + Executor.blinkyState);
 		for(GHOST ghost : GHOST.values())	{
 			switch (ghost){
 				case BLINKY :
 					if (game.isGhostEdible(GHOST.BLINKY)){
 						Executor.blinkyEvent = "isghostedible";
 					}
-					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.PATH) <=1) {
+					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.MANHATTAN) <=40) {
 						Executor.blinkyEvent = "nearPacman";
-						System.out.println("close to pacman " + game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.PATH));
+						
 						//System.out.println("close to pacman ");
 						
 					}
@@ -55,7 +56,10 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 					//}
 					//Once there's an event, go to the new state
 					try {
+						System.out.println("STATE: " + Executor.blinkyState);
 						Executor.blinkyState = Executor.sr.getNextState(states, Executor.blinkyState, Executor.blinkyEvent);
+						//System.out.println("STATE: " + Executor.blinkyState);
+						//System.out.println("close to pacman " + game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.MANHATTAN));
 					} 
 					catch(IOException e) {
 						System.out.println(e.getMessage());
