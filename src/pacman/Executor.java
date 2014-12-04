@@ -38,12 +38,19 @@ import static pacman.game.Constants.*;
 @SuppressWarnings("unused")
 public class Executor
 {	
+	public static StateReader sr;
+	
 	public static String[][] arrayStates;
 	
 	public static String inkyState;
 	public static String blinkyState;
 	public static String pinkyState;
 	public static String sueState;
+	
+	public static String inkyEvent;
+	public static String blinkyEvent;
+	public static String pinkyEvent;
+	public static String sueEvent;
 	/**
 	 * The main method. Several options are listed - simply remove comments to use the option you want.
 	 *
@@ -55,14 +62,20 @@ public class Executor
 		String pathToStates = "src/stateMachine.txt";//"C:/Users/James/Desktop/gitPacman/mspacman/stateMAchine.txt";
 		
 		try {
-			StateReader sr = new StateReader(pathToStates);
+			sr = new StateReader(pathToStates);
 			arrayStates = sr.openFile();
 			
 			//Ghosts initial states 
-			inkyState  = arrayStates[0][0];
-			blinkyState  = arrayStates[0][0];
-			pinkyState  = arrayStates[0][0];
-			sueState  = arrayStates[0][0];
+			inkyState = arrayStates[0][0];
+			blinkyState = arrayStates[0][0];
+			pinkyState = arrayStates[0][0];
+			sueState = arrayStates[0][0];
+			
+			//Ghosts initial events(they're all atjunction)
+			inkyEvent = arrayStates[0][1];
+			blinkyEvent = arrayStates[0][1];
+			pinkyEvent = arrayStates[0][1];
+			sueEvent = arrayStates[0][1];
 			
 			//System.out.println("array value: " + arrayStates[6][0]);
 			System.out.println("current state: " + blinkyState + " type: " + blinkyState.getClass());

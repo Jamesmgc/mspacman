@@ -1,8 +1,8 @@
-roaming,seepacman,movetowards,aggressive
-roaming,atjunction,randomturn,roaming
+roaming,nearPacman,movetowards,aggressive
+roaming,noUniqueEvent,randomturn,roaming
 roaming,isghostedible,moveaway,fleeing
-aggressive,atjunction,movetowards,aggressive
-aggressive,checkdistance,randomturn,roaming
-aggressive,closetopill,moveaway,fleeing
+aggressive,noUniqueEvent,movetowards,aggressive
+aggressive,nearPacman,randomturn,roaming
+aggressive,eatenPill,moveaway,fleeing
 fleeing,isghostedible,randomturn,roaming
-fleeing,atjunction,moveaway,fleeing
+fleeing,noUniqueEvent,moveaway,fleeing

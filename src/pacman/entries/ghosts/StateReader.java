@@ -9,6 +9,7 @@ import java.io.InputStream;
 public class StateReader {
 	
 	private String path;
+	String[][] states;// = new String[numberOfLines][4];
 	
 	public StateReader(String filePath) {
 		path = filePath;
@@ -20,7 +21,8 @@ public class StateReader {
 		
 		int numberOfLines = readlines();
 		String[] textData = new String[numberOfLines];//store the text file lines
-		String[][] states = new String[numberOfLines][4];//2d array to store each state piece separately 
+		//String[][] states = new String[numberOfLines][4];//2d array to store each state piece separately 
+		states = new String[numberOfLines][4];//2d array to store each state piece separately 
 		
 		int i;
 		for (i=0; i < numberOfLines; i++) {//loop through each line and split it at each ","
@@ -51,5 +53,20 @@ public class StateReader {
 			noOfLines++;
 		}
 		return noOfLines;
+	}
+	
+	String getNextState(String[][] stateTable, String currState, String currEvent ) throws IOException{
+		String newState = "";
+		int numberOfLines = readlines();
+		
+		//go through each line and each element
+		for (int i = 0; i < numberOfLines; i++) {
+			if (stateTable[i][0] == currState && stateTable[i][1] == currEvent) {
+				newState = stateTable[i][3];
+				break;
+			}
+		}
+		
+		return newState;
 	}
 }

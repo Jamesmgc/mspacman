@@ -6,11 +6,11 @@ import java.util.Random;
 
 import pacman.Executor;
 import pacman.controllers.Controller;
+import pacman.game.Constants;
 import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
-
 import pacman.entries.ghosts.StateReader;
 
 /*
@@ -34,22 +34,110 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		//Place your game logic here to play the game as the ghosts
 		int targetNode=game.getPacmanCurrentNodeIndex();
 		
+		//check for ghost events
+		for(GHOST ghost : GHOST.values())	{
+			switch (ghost){
+				case BLINKY :
+					if (game.isGhostEdible(GHOST.BLINKY)){
+						Executor.blinkyEvent = "isghostedible";
+					}
+					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.PATH) <=1) {
+						Executor.blinkyEvent = "nearPacman";
+						System.out.println("close to pacman " + game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.PATH));
+						//System.out.println("close to pacman ");
+						
+					}
+					else if (game.wasPowerPillEaten()) {
+						Executor.blinkyEvent = "eatenPill";
+					}
+					//else {
+					//	Executor.blinkyEvent = "atjunction";
+					//}
+					//Once there's an event, go to the new state
+					try {
+						Executor.blinkyState = Executor.sr.getNextState(states, Executor.blinkyState, Executor.blinkyEvent);
+					} 
+					catch(IOException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				
+				case INKY :
+					if (game.isGhostEdible(GHOST.INKY)){
+						Executor.inkyEvent = "isghostedible";
+					}
+					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.INKY), targetNode, DM.PATH) <= 10) {
+						Executor.inkyEvent = "nearPacman";
+					}
+					//else {
+					//	Executor.inkyEvent = "noUniqueEvent";	
+					//}
+					//Once there's an event, go to the new state
+					try {
+						Executor.inkyState = Executor.sr.getNextState(states, Executor.inkyState, Executor.inkyEvent);
+					} 
+					catch(IOException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+					
+				case PINKY :
+					if (game.isGhostEdible(GHOST.PINKY)){
+						Executor.pinkyEvent = "isghostedible";
+					}
+					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.PINKY), targetNode, DM.PATH) <= 10) {
+						Executor.pinkyEvent = "nearPacman";
+					}
+					//else {
+					//	Executor.pinkyEvent = "noUniqueEvent";
+					//}
+					//Once there's an event, go to the new state
+					try {
+						Executor.pinkyState = Executor.sr.getNextState(states, Executor.pinkyState, Executor.pinkyEvent);
+					} 
+					catch(IOException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+				
+				case SUE :
+					if (game.isGhostEdible(GHOST.SUE)){
+						Executor.sueEvent = "isghostedible";
+					}
+					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.SUE), targetNode, DM.PATH) <= 10) {
+						Executor.sueEvent = "nearPacman";
+					}
+					//else {
+					//	Executor.sueEvent = "noUniqueEvent";
+					//}
+					//Once there's an event, go to the new state
+					try {
+						Executor.sueState = Executor.sr.getNextState(states, Executor.sueState, Executor.sueEvent);
+					} 
+					catch(IOException e) {
+						System.out.println(e.getMessage());
+					}
+					break;
+			}
+		}
+		
+		
 		//Decide a move for BLINKY based on its state
 		if(game.doesGhostRequireAction(GHOST.BLINKY)){
 			switch (Executor.blinkyState){
 				case "roaming": 
 					myMoves.put(GHOST.BLINKY,moves[rnd.nextInt(moves.length)]);
-					break;
+				break;
 					
 				case "aggressive": 
 					myMoves.put(GHOST.BLINKY,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
 									targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
-					break;
+				break;
 					
 				case "fleeing":
 					myMoves.put(GHOST.BLINKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
 							targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
-					break;
+				break;
 			}
 		}
 		
@@ -58,17 +146,17 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 			switch (Executor.inkyState){
 				case "roaming": 
 					myMoves.put(GHOST.INKY,moves[rnd.nextInt(moves.length)]);
-					break;
+				break;
 				
 				case "aggressive": 
 					myMoves.put(GHOST.INKY,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),
 								targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
-					break;
+				break;
 					
 				case "fleeing":
 					myMoves.put(GHOST.INKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),
 							targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
-					break;
+				break;
 			}
 		}
 		
@@ -77,18 +165,18 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 			switch (Executor.pinkyState){
 				case "roaming": 
 					myMoves.put(GHOST.PINKY,moves[rnd.nextInt(moves.length)]);
-					break;
+				break;
 				
 				case "aggressive": 
 					myMoves.put(GHOST.PINKY,
 						game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),
 								targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
-					break;
+				break;
 					
 				case "fleeing":
 					myMoves.put(GHOST.PINKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),
 							targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
-					break;
+				break;
 			}
 		}
 		
@@ -97,17 +185,17 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 			switch (Executor.sueState){
 				case "roaming": 
 					myMoves.put(GHOST.SUE,moves[rnd.nextInt(moves.length)]);
-					break;
+				break;
 				
 				case "aggressive": 
 					myMoves.put(GHOST.SUE,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.SUE),
 								targetNode,game.getGhostLastMoveMade(GHOST.SUE),DM.PATH));
-					break;
+				break;
 				
 				case "fleeing":
 					myMoves.put(GHOST.SUE,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.SUE),
 							targetNode,game.getGhostLastMoveMade(GHOST.SUE),DM.PATH));
-					break;
+				break;
 			}
 		}
 		
