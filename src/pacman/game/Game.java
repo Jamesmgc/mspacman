@@ -994,11 +994,6 @@ public final class Game
 		return ghosts.get(ghostType).currentNodeIndex;
 	}
 	
-	public String getGhostCurrentState(GHOST ghostType)
-	{
-		return ghosts.get(ghostType).mState;
-	}
-
 	/**
 	 * Current direction of the specified ghost.
 	 *

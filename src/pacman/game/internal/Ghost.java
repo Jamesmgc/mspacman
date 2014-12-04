@@ -12,7 +12,6 @@ public final class Ghost
 	public int currentNodeIndex, edibleTime, lairTime;	
 	public GHOST type;
 	public MOVE lastMoveMade;
-	public String mState;// = Executor.currState;
 
 	public Ghost(GHOST type, int currentNodeIndex, int edibleTime, int lairTime, MOVE lastMoveMade)
 	{
@@ -21,7 +20,6 @@ public final class Ghost
 		this.edibleTime = edibleTime;
 		this.lairTime = lairTime;
 		this.lastMoveMade = lastMoveMade;
-		this.mState = Executor.currState;
 	}
 
 	public Ghost copy()

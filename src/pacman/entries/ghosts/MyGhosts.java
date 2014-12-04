@@ -23,71 +23,93 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 {
 	private EnumMap<GHOST, MOVE> myMoves=new EnumMap<GHOST, MOVE>(GHOST.class);
 	MOVE[] moves=MOVE.values();
-	/*String pathToStates = "C:/Users/James/Desktop/gitPacman/mspacman/stateMAchine.txt";
-	String[][] arrayStates;*/
-	//String currState;
-	//String mState = Executor.currState;
-	
+	private Random rnd=new Random();
+	String[][] states = Executor.arrayStates;
+	private enum events {seepacman, isghostedible, atjunction};
 	
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue)
 	{
-		//System.out.println("current ghost state: " + mState);
 		myMoves.clear();
-		
-		/*try {
-			StateReader sr = new StateReader(pathToStates);
-			arrayStates = sr.openFile();
-			currState = arrayStates[0][0];
-			//System.out.println("array value: " + arrayStates[6][0]);
-			System.out.println("current state: " + currState);
-		} 
-		catch(IOException e) {
-			System.out.println(e.getMessage());
-		}*/
 		
 		//Place your game logic here to play the game as the ghosts
 		int targetNode=game.getPacmanCurrentNodeIndex();
 		
-		//loop through all ghosts
-		//String str = game.getGhostCurrentState(GHOST.BLINKY);
-		//System.out.println(str);
-		String str = game.getGhostCurrentState(GHOST.BLINKY);
-		if(str == "roaming"){
-			switch (game.getGhostCurrentState(GHOST.BLINKY)){
-				case  "roaming": 
-					myMoves.put(GHOST.BLINKY,
-							game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
+		//Decide a move for BLINKY based on its state
+		if(game.doesGhostRequireAction(GHOST.BLINKY)){
+			switch (Executor.blinkyState){
+				case "roaming": 
+					myMoves.put(GHOST.BLINKY,moves[rnd.nextInt(moves.length)]);
+					break;
+					
+				case "aggressive": 
+					myMoves.put(GHOST.BLINKY,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
 									targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
 					break;
-				case  "agressive": 
-					myMoves.put(GHOST.BLINKY,
-							game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
-									targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
+					
+				case "fleeing":
+					myMoves.put(GHOST.BLINKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),
+							targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
 					break;
 			}
 		}
-		//Executor.arrayStates;
-		/*if(game.doesGhostRequireAction(GHOST.BLINKY)){
-			if (game.getGhostCurrentState(GHOST.BLINKY) == "roaming") {
-			myMoves.put(GHOST.BLINKY,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY),targetNode,game.getGhostLastMoveMade(GHOST.BLINKY),DM.PATH));
-			}
-		}*/
+		
+		//Decide a move for INKY based on its state
 		if(game.doesGhostRequireAction(GHOST.INKY)){
-			if (game.getGhostCurrentState(GHOST.INKY) == "roaming") {
-			myMoves.put(GHOST.INKY,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
-		}}
+			switch (Executor.inkyState){
+				case "roaming": 
+					myMoves.put(GHOST.INKY,moves[rnd.nextInt(moves.length)]);
+					break;
+				
+				case "aggressive": 
+					myMoves.put(GHOST.INKY,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),
+								targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
+					break;
+					
+				case "fleeing":
+					myMoves.put(GHOST.INKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.INKY),
+							targetNode,game.getGhostLastMoveMade(GHOST.INKY),DM.PATH));
+					break;
+			}
+		}
+		
+		//Decide a move for PINKY based on its state
 		if(game.doesGhostRequireAction(GHOST.PINKY)){
-			if (game.getGhostCurrentState(GHOST.PINKY) == "roaming") {
-			myMoves.put(GHOST.PINKY,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
-		}}
+			switch (Executor.pinkyState){
+				case "roaming": 
+					myMoves.put(GHOST.PINKY,moves[rnd.nextInt(moves.length)]);
+					break;
+				
+				case "aggressive": 
+					myMoves.put(GHOST.PINKY,
+						game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),
+								targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
+					break;
+					
+				case "fleeing":
+					myMoves.put(GHOST.PINKY,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),
+							targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
+					break;
+			}
+		}
+		
+		//Decide a move for SUE based on its state
 		if(game.doesGhostRequireAction(GHOST.SUE)){
-			if (game.getGhostCurrentState(GHOST.SUE) == "roaming") {
-			myMoves.put(GHOST.SUE,
-					game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY),targetNode,game.getGhostLastMoveMade(GHOST.PINKY),DM.PATH));
-		}}
+			switch (Executor.sueState){
+				case "roaming": 
+					myMoves.put(GHOST.SUE,moves[rnd.nextInt(moves.length)]);
+					break;
+				
+				case "aggressive": 
+					myMoves.put(GHOST.SUE,game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.SUE),
+								targetNode,game.getGhostLastMoveMade(GHOST.SUE),DM.PATH));
+					break;
+				
+				case "fleeing":
+					myMoves.put(GHOST.SUE,game.getApproximateNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(GHOST.SUE),
+							targetNode,game.getGhostLastMoveMade(GHOST.SUE),DM.PATH));
+					break;
+			}
+		}
 		
 		return myMoves;
 	}

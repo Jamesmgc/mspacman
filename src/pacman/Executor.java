@@ -39,7 +39,11 @@ import static pacman.game.Constants.*;
 public class Executor
 {	
 	public static String[][] arrayStates;
-	public static String currState;
+	
+	public static String inkyState;
+	public static String blinkyState;
+	public static String pinkyState;
+	public static String sueState;
 	/**
 	 * The main method. Several options are listed - simply remove comments to use the option you want.
 	 *
@@ -48,16 +52,20 @@ public class Executor
 	public static void main(String[] args)
 	{
 		Executor exec=new Executor();
-		String pathToStates = "C:/Users/James/Desktop/gitPacman/mspacman/stateMAchine.txt";
-		//String[][] arrayStates;
-		//String currState;
+		String pathToStates = "src/stateMachine.txt";//"C:/Users/James/Desktop/gitPacman/mspacman/stateMAchine.txt";
 		
 		try {
 			StateReader sr = new StateReader(pathToStates);
 			arrayStates = sr.openFile();
-			currState = arrayStates[0][0];
+			
+			//Ghosts initial states 
+			inkyState  = arrayStates[0][0];
+			blinkyState  = arrayStates[0][0];
+			pinkyState  = arrayStates[0][0];
+			sueState  = arrayStates[0][0];
+			
 			//System.out.println("array value: " + arrayStates[6][0]);
-			System.out.println("current state: " + currState);
+			System.out.println("current state: " + blinkyState + " type: " + blinkyState.getClass());
 		} 
 		catch(IOException e) {
 			System.out.println(e.getMessage());
