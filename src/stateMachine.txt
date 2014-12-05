@@ -1,8 +1,9 @@
 roaming,nearPacman,movetowards,aggressive
-roaming,noUniqueEvent,randomturn,roaming
+roaming,ghostNotEdible,randomturn,roaming
 roaming,isghostedible,moveaway,fleeing
-aggressive,noUniqueEvent,movetowards,aggressive
+aggressive,ghostNotEdible,movetowards,aggressive
 aggressive,nearPacman,randomturn,roaming
-aggressive,eatenPill,moveaway,fleeing
-fleeing,isghostedible,randomturn,roaming
-fleeing,noUniqueEvent,moveaway,fleeing
+aggressive,isghostedible,moveaway,fleeing
+fleeing,isghostedible,randomturn,fleeing
+fleeing,ghostNotEdible,moveaway,roaming
+fleeing,nearPacman,moveaway,fleeing

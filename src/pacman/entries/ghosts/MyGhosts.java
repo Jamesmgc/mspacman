@@ -39,27 +39,18 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 		for(GHOST ghost : GHOST.values())	{
 			switch (ghost){
 				case BLINKY :
-					if (game.isGhostEdible(GHOST.BLINKY)){
+					if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.MANHATTAN) <=40) {
+						Executor.blinkyEvent = "nearPacman";
+					}
+					else if (game.isGhostEdible(GHOST.BLINKY)){
 						Executor.blinkyEvent = "isghostedible";
 					}
-					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.MANHATTAN) <=40) {
-						Executor.blinkyEvent = "nearPacman";
-						
-						//System.out.println("close to pacman ");
-						
+					
+					else if (!game.isGhostEdible(GHOST.BLINKY)){
+						Executor.blinkyEvent = "ghostNotEdible";
 					}
-					else if (game.wasPowerPillEaten()) {
-						Executor.blinkyEvent = "eatenPill";
-					}
-					//else {
-					//	Executor.blinkyEvent = "atjunction";
-					//}
-					//Once there's an event, go to the new state
 					try {
-						System.out.println("STATE: " + Executor.blinkyState);
 						Executor.blinkyState = Executor.sr.getNextState(states, Executor.blinkyState, Executor.blinkyEvent);
-						//System.out.println("STATE: " + Executor.blinkyState);
-						//System.out.println("close to pacman " + game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), targetNode, DM.MANHATTAN));
 					} 
 					catch(IOException e) {
 						System.out.println(e.getMessage());
@@ -67,16 +58,16 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 					break;
 				
 				case INKY :
-					if (game.isGhostEdible(GHOST.INKY)){
-						Executor.inkyEvent = "isghostedible";
-					}
-					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.INKY), targetNode, DM.PATH) <= 10) {
+					if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.INKY), targetNode, DM.MANHATTAN) <= 40) {
 						Executor.inkyEvent = "nearPacman";
 					}
-					//else {
-					//	Executor.inkyEvent = "noUniqueEvent";	
-					//}
-					//Once there's an event, go to the new state
+					else if (game.isGhostEdible(GHOST.INKY)){
+						Executor.inkyEvent = "isghostedible";
+					}
+					else if (!game.isGhostEdible(GHOST.INKY)){
+						Executor.inkyEvent = "ghostNotEdible";
+					}
+					
 					try {
 						Executor.inkyState = Executor.sr.getNextState(states, Executor.inkyState, Executor.inkyEvent);
 					} 
@@ -86,16 +77,16 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 					break;
 					
 				case PINKY :
-					if (game.isGhostEdible(GHOST.PINKY)){
-						Executor.pinkyEvent = "isghostedible";
-					}
-					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.PINKY), targetNode, DM.PATH) <= 10) {
+					if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.PINKY), targetNode, DM.MANHATTAN) <= 40) {
 						Executor.pinkyEvent = "nearPacman";
 					}
-					//else {
-					//	Executor.pinkyEvent = "noUniqueEvent";
-					//}
-					//Once there's an event, go to the new state
+					else if (game.isGhostEdible(GHOST.PINKY)){
+						Executor.pinkyEvent = "isghostedible";
+					}
+					else if (!game.isGhostEdible(GHOST.PINKY)){
+						Executor.pinkyEvent = "ghostNotEdible";
+					}
+					
 					try {
 						Executor.pinkyState = Executor.sr.getNextState(states, Executor.pinkyState, Executor.pinkyEvent);
 					} 
@@ -105,16 +96,15 @@ public class MyGhosts extends Controller<EnumMap<GHOST,MOVE>>
 					break;
 				
 				case SUE :
-					if (game.isGhostEdible(GHOST.SUE)){
-						Executor.sueEvent = "isghostedible";
-					}
-					else if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.SUE), targetNode, DM.PATH) <= 10) {
+					if (game.getDistance(game.getGhostCurrentNodeIndex(GHOST.SUE), targetNode, DM.PATH) <= 40) {
 						Executor.sueEvent = "nearPacman";
 					}
-					//else {
-					//	Executor.sueEvent = "noUniqueEvent";
-					//}
-					//Once there's an event, go to the new state
+					else if (game.isGhostEdible(GHOST.SUE)){
+						Executor.sueEvent = "isghostedible";
+					}
+					else if (!game.isGhostEdible(GHOST.SUE)){
+						Executor.sueEvent = "ghostNotEdible";
+					}
 					try {
 						Executor.sueState = Executor.sr.getNextState(states, Executor.sueState, Executor.sueEvent);
 					} 

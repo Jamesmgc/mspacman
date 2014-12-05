@@ -63,7 +63,7 @@ public class StateReader {
 		//go through each line and each element
 		for (int i = 0; i < numberOfLines; i++) {
 			System.out.println("INFO IS: " + stateTable[i][0] + "_____" + currState);
-			if (stateTable[i][0] == currState && stateTable[i][1] == currEvent) {
+			if (stateTable[i][0].equals(currState)  && stateTable[i][1].equals(currEvent)) {
 				newState = stateTable[i][3];
 				//System.out.println(newState);
 				break;
