@@ -59,6 +59,7 @@ public class Executor
 	public static void main(String[] args)
 	{
 		Executor exec=new Executor();
+		
 		String pathToStates = "src/stateMachine.txt";//"C:/Users/James/Desktop/gitPacman/mspacman/stateMAchine.txt";
 		
 		try {

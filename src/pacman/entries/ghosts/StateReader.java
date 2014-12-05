@@ -9,19 +9,20 @@ import java.io.InputStream;
 public class StateReader {
 	
 	private String path;
-	String[][] states;// = new String[numberOfLines][4];
+	String[][] states;
 	
 	public StateReader(String filePath) {
 		path = filePath;
 	}
 	
+	//opens the stateMachine file and stores the states in a 2D array which is returned
 	public String[][] openFile() throws IOException{
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
 		
 		int numberOfLines = readlines();
 		String[] textData = new String[numberOfLines];//store the text file lines
-		//String[][] states = new String[numberOfLines][4];//2d array to store each state piece separately 
+
 		states = new String[numberOfLines][4];//2d array to store each state piece separately 
 		
 		int i;
@@ -31,17 +32,15 @@ public class StateReader {
 			for (int j = 0; j < 4;){
 				for (String statePiece: textData[i].split(",")){
 					states[i][j] = statePiece;
-					//System.out.println(statePiece);
 					j++;
 			    }
 			}
-			//System.out.println("STATES AT 0: " + states[3][0]);
 		}
-		
-		br.close( );
-		return states;//textData;//returns the text file as an array of lines
+		br.close();
+		return states;
 	}
 	
+	//gets the number of lines in the file
 	int readlines() throws IOException {
 		FileReader fr = new FileReader(path);
 		BufferedReader br = new BufferedReader(fr);
@@ -56,16 +55,16 @@ public class StateReader {
 		return noOfLines;
 	}
 	
+	//uses passed in values to find what state to move to next
 	String getNextState(String[][] stateTable, String currState, String currEvent ) throws IOException{
 		String newState = "";
 		int numberOfLines = readlines();
 		
 		//go through each line and each element
 		for (int i = 0; i < numberOfLines; i++) {
-			System.out.println("INFO IS: " + stateTable[i][0] + "_____" + currState);
+			//System.out.println("INFO IS: " + stateTable[i][0] + "_____" + currState);
 			if (stateTable[i][0].equals(currState)  && stateTable[i][1].equals(currEvent)) {
 				newState = stateTable[i][3];
-				//System.out.println(newState);
 				break;
 			}
 		}
